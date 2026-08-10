@@ -40,8 +40,23 @@ suppressPackageStartupMessages({
 
 clinical_file <- "../data/STable1.xlsx"
 clinical_sheet <- "ClinicalTable"
-script_file <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)[1])
-script_dir <- if (!is.na(script_file)) dirname(normalizePath(script_file, mustWork = TRUE)) else getwd()
+resolve_script_dir <- function(script_name) {
+  for (frame in rev(sys.frames())) {
+    ofile <- frame$ofile
+    if (!is.null(ofile) && basename(ofile) == script_name && file.exists(ofile)) {
+      return(dirname(normalizePath(ofile, mustWork = TRUE)))
+    }
+  }
+  script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
+  if (length(script_arg) > 0) {
+    return(dirname(normalizePath(sub("^--file=", "", script_arg[[1]]), mustWork = TRUE)))
+  }
+  if (file.exists(file.path(getwd(), script_name))) {
+    return(normalizePath(getwd(), mustWork = TRUE))
+  }
+  stop("Cannot determine script directory for `", script_name, "`. Run from the script folder or with Rscript.", call. = FALSE)
+}
+script_dir <- resolve_script_dir("Figure1B_barplot.R")
 output_dir <- file.path(script_dir, "output")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 output_file <- file.path(output_dir, "Figure1B_barplot_subtype.pdf")

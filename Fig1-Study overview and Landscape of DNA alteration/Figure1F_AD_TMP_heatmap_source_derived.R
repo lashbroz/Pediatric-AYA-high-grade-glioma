@@ -20,16 +20,42 @@
 # The smoother span is kept fixed rather than tuned to mimic the manuscript
 # visualization.
 
-script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
-script_path <- if (length(script_arg) > 0) sub("^--file=", "", script_arg[[1]]) else ""
-script_path <- gsub("~\\+~", " ", script_path)
-script_dir <- if (nzchar(script_path)) {
-  normalizePath(dirname(script_path), mustWork = TRUE)
-} else if (file.exists(file.path(getwd(), "Figure1F_AD_TMP_heatmap_source_derived.R"))) {
-  normalizePath(getwd(), mustWork = TRUE)
-} else {
-  normalizePath(dirname(getwd()), mustWork = TRUE)
+resolve_script_dir <- function(script_name) {
+  for (frame in rev(sys.frames())) {
+    ofile <- frame$ofile
+    if (!is.null(ofile) && basename(ofile) == script_name && file.exists(ofile)) {
+      return(dirname(normalizePath(ofile, mustWork = TRUE)))
+    }
+  }
+  script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
+  if (length(script_arg) > 0) {
+    script_path <- gsub("~\\+~", " ", sub("^--file=", "", script_arg[[1]]))
+    return(dirname(normalizePath(script_path, mustWork = TRUE)))
+  }
+  if (file.exists(file.path(getwd(), script_name))) {
+    return(normalizePath(getwd(), mustWork = TRUE))
+  }
+  stop("Cannot determine script directory for `", script_name, "`. Run from the script folder or with Rscript.", call. = FALSE)
 }
+script_dir <- resolve_script_dir("Figure1F_AD_TMP_heatmap_source_derived.R")
+
+managed_env_vars <- c(
+  "AGETMP_FIGURE1F_MODE",
+  "AGETMP_OUTPUT_DIR",
+  "AGETMP_SOURCE_SAMPLE_REFERENCE_MATRIX",
+  paste0("AGETMP_", toupper(c("protein", "rna", "phospho")), "_FIT_SAMPLE_REFERENCE")
+)
+old_env_values <- Sys.getenv(managed_env_vars, unset = NA_character_)
+restore_env <- function() {
+  for (name in names(old_env_values)) {
+    if (is.na(old_env_values[[name]])) {
+      Sys.unsetenv(name)
+    } else {
+      do.call(Sys.setenv, stats::setNames(list(old_env_values[[name]]), name))
+    }
+  }
+}
+on.exit(restore_env(), add = TRUE)
 
 if (!nzchar(Sys.getenv("AGETMP_FIGURE1F_MODE"))) {
   Sys.setenv(AGETMP_FIGURE1F_MODE = "source")
