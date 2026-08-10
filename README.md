@@ -167,6 +167,11 @@ Generated figure files and tables are written to the `output/` subdirectory
 within the respective figure folder, unless a figure-specific README explicitly
 documents an exception.
 
+For example, the Figure 6 folder includes a standalone Figure 6N script that
+reconstructs the PD-L1 protein versus ITGAV N3H5F1S1G0 glycopeptide correlation
+panel from the documented supplementary tables and processed PDC data files in
+`data/`; see the Figure 6 README for the exact input list.
+
 ---
 
 # Requirements
