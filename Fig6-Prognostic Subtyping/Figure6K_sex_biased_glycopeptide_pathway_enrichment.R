@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # ==============================================================================
-# File: FIGURE6K_sex_biased_glycopeptide_pathway_enrichment.R
+# File: Figure6K_sex_biased_glycopeptide_pathway_enrichment.R
 # ==============================================================================
 #
 # Title:

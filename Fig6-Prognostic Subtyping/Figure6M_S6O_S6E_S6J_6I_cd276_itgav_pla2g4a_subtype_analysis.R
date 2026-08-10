@@ -4,7 +4,7 @@
 # Affiliation: Icahn School of Medicine at Mount Sinai
 
 # ==============================================================================
-# File: FIGURE6M_S6O_S6E_S6J_6I_cd276_itgav_pla2g4a_subtype_analysis.R
+# File: Figure6M_S6O_S6E_S6J_6I_cd276_itgav_pla2g4a_subtype_analysis.R
 # ==============================================================================
 #
 # Title:

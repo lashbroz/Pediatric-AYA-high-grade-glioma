@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # ==============================================================================
-# File: FIGURE6D_S6B_cluster_annotation_corrplots.R
+# File: Figure6D_S6B_cluster_annotation_corrplots.R
 # ==============================================================================
 #
 # Title:
