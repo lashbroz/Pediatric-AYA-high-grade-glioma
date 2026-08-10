@@ -25,4 +25,8 @@ Generated PDFs, PNG previews, and tables are written to `output/`.
 | Figure 6K | `Figure6K_sex_biased_glycopeptide_pathway_enrichment.R` | Overall survival outcome differences across Protein Subtypes | Bar plot illustrating pathway enrichment results for comparing male and female tumors in C2 based on glycopeptide abundance data. |
 | Figure 6L | `Figure6K_sex_biased_glycopeptide_pathway_enrichment.R` | Overall survival outcome differences across Protein Subtypes | Volcano plot comparing glycopeptide abundances between F2 and M2 for genes in the Epithelial Mesenchymal Transition pathway. |
 | Figure 6M | `Figure6M_S6O_S6E_S6J_6I_cd276_itgav_pla2g4a_subtype_analysis.R` | Overall survival outcome differences across Protein Subtypes | Boxplot illustrating abundance of the ITGAV glycopeptide with an N-linked sialylated glycan (N3H5F1S1G0) across sex and protein clusters. |
-| Figure 6N | `Figure6N_itgav_sialylated_glycopeptide_pdl1_correlation.R` | Overall survival outcome differences across Protein Subtypes | Scatterplot showing correlations between global protein abundance of PD-L1 and abundance of the ITGAV glycopeptide N3H5F1S1G0 in female and male tumors. Uses `../data/STable1.xlsx`, `../data/STable6.xlsx`, `../data/cDisc_proteome_imputed_data_09152023.tsv`, and `../data/Disc_glyco_v2_imputed_batch1+2_05082024_011524.tsv`. |
+| Figure 6N | `Figure6N_itgav_sialylated_glycopeptide_pdl1_correlation.R` | Overall survival outcome differences across Protein Subtypes | Scatterplot showing correlations between global protein abundance of PD-L1 and abundance of the ITGAV glycopeptide N3H5F1S1G0 in female and male tumors. |
+
+Note: `Figure6D_S6B_cluster_annotation_corrplots.R` generates Figure 6D and
+Figure S6B annotation-enrichment corrplots. It does not generate the Figure 6A,
+Figure 6B, or Figure 6C protein pathway activity heatmaps/correlation panel.

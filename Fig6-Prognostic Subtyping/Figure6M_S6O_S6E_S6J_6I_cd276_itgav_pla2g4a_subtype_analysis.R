@@ -49,8 +49,23 @@ protein_file <- "../data/cDisc_proteome_imputed_data_09152023.tsv"
 phosphosite_file <- "../data/cDisc_phosphosite_imputed_data_ischemia_removed_motif_11032023.tsv"
 glyco_file <- "../data/Disc_glyco_v2_imputed_batch1+2_05082024_011524.tsv"
 
-script_file <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)[1])
-script_dir <- if (!is.na(script_file)) dirname(normalizePath(script_file, mustWork = TRUE)) else getwd()
+resolve_script_dir <- function(script_name) {
+  for (frame in rev(sys.frames())) {
+    ofile <- frame$ofile
+    if (!is.null(ofile) && basename(ofile) == script_name && file.exists(ofile)) {
+      return(dirname(normalizePath(ofile, mustWork = TRUE)))
+    }
+  }
+  script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
+  if (length(script_arg) > 0) {
+    return(dirname(normalizePath(sub("^--file=", "", script_arg[[1]]), mustWork = TRUE)))
+  }
+  if (file.exists(file.path(getwd(), script_name))) {
+    return(normalizePath(getwd(), mustWork = TRUE))
+  }
+  stop("Cannot determine script directory for `", script_name, "`. Run from the script folder or with Rscript.", call. = FALSE)
+}
+script_dir <- resolve_script_dir("Figure6M_S6O_S6E_S6J_6I_cd276_itgav_pla2g4a_subtype_analysis.R")
 output_dir <- file.path(script_dir, "output")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 output_figure6m_pdf <- file.path(output_dir, "Figure6M_ITGAV_sialylated_glycopeptide.pdf")
