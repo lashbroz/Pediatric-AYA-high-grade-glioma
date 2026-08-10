@@ -111,7 +111,7 @@ cor_summary <- function(data, group_label) {
   )
 }
 
-script_dir <- resolve_script_dir("Figure6N_itgav_sialylated_glycopeptide_pdl1_correlation.R")
+script_dir <- resolve_script_dir("FIGURE6N_itgav_sialylated_glycopeptide_pdl1_correlation.R")
 repo_root <- dirname(script_dir)
 data_dir <- file.path(repo_root, "data")
 output_dir <- file.path(script_dir, "output")
